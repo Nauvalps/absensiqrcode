@@ -12,9 +12,12 @@ class Dashboard extends CI_Controller
 			redirect('auth');
 		}
 		$this->load->model('Dashboard_model', 'dashboard');
-		$this->load->model('Presensi_model', 'presensi');
-		$this->load->model('Karyawan_model', 'karyawan');
 		$this->user = $this->ion_auth->user()->row();
+		if (!$this->ion_auth->is_admin()) {
+			$this->load->model('Presensi_model', 'presensi');
+			$this->load->model('Karyawan_model', 'karyawan');
+			$this->load->model('Kehadiran_model', 'kehadiran');
+		}
 	}
 	public function index()
 	{
@@ -23,21 +26,22 @@ class Dashboard extends CI_Controller
 			'user' 		=> $user,
 			'users' 	=> $this->ion_auth->user()->row(),
 		];
-		$cekKaryawan = $this->karyawan->get_by_email_karyawan($user->email);
-		// var_dump($data);
-		if (isset($cekKaryawan->id_karyawan) == true) {
-			$result = [
-				'karyawan' => $cekKaryawan->id_karyawan 
-			];
-			$data += $result;
-			// var_dump($data);
-		}
 		if ($this->ion_auth->is_admin()) {
 			$data['info_box'] = $this->admin_box();
 			$plotting  = array('1', '2', '3', '4', '5', '6', '7');
 			$plotting2 = array('1', '2', '3', '4');
 			$data['get_plot'] = $this->dashboard->get_max($plotting)->result();
 			$data['get_plot2'] = $this->dashboard->get_max2($plotting2)->result();
+		} else {
+			$cekKaryawan = $this->karyawan->get_by_email_karyawan($user->email);
+			if (isset($cekKaryawan->id_karyawan) == true) {
+				$kehadiran = $this->kehadiran->get_all();
+				$result = [
+					'karyawan' => $cekKaryawan->id_karyawan,
+					'kehadiran' => $kehadiran
+				];
+				$data += $result;
+			}	
 		}
 		$this->template->load('template/template', 'dashboard/dashboard', $data);
 		$this->load->view('template/datatables');
