@@ -2,14 +2,6 @@ let table;
 
 $(document).ready(function () {
     table = $("#presensi").addClass('nowrap').DataTable({
-        initComplete: function () {
-            let api = this.api();
-            $('#presensi_filter input')
-                .off('.DT')
-                .on('keyup.DT', function (e) {
-                    api.search(this.value).draw();
-                });
-        },
         responsive: true,
         processing: true,
         serverSide: true,
@@ -23,13 +15,12 @@ $(document).ready(function () {
         ],
         "order": [[0, 'asc']],
         ajax: {
-            "url": base_url + "presensi/data/" + segment,
+            "url": base_url + "dashboard/data/" + id_karyawan,
             "type": "POST",
         },
         columns:
             [
                 { 'data': 'id_absen', defaultContent: '' },
-                { "data": "nama_karyawan" },
                 { "data": "tgl" },
                 { "data": "jam_msk" },
                 { "data": "jam_klr" },
@@ -43,28 +34,13 @@ $(document).ready(function () {
                 "data": {
                     "id_absen": "id_absen",
                 },
-                "targets": 8,
+                "targets": 6,
                 "orderable": false,
-                "searchable": false,
-                "render": function (data, type, row, meta) {
-                    console.log(data);
-                    let btn;
-                    if (checkLogin == 1) {
-                        return `
-                    <a href="${base_url}presensi/update/${data.id_absen}" title="edit" class="btn btn-md btn-warning btn3d btn-edit-data">
-                    <i class="fa fa-pencil-square-o"></i> Edit
-                    </a>
-                    <a href="${base_url}presensi/delete/${data.id_absen}" title="hapus" class="btn btn-md btn-danger btn3d btn-remove-data">
-                    <i class="fa fa-trash"></i> Hapus
-                    </a>`;
-                    }
-                    else {
-                        return ` `;
-                    }
-                }
+                "searchable": false
             },
         ],
         "createdRow": function (row, data, index) {
+            console.log(data);
             if (data.id_status == 1) {
                 $('td', row).eq(7).html('<span class="label label-success">' + data.nama_status + '</span>');
             }
@@ -98,63 +74,6 @@ $(document).ready(function () {
             else {
                 $('td', row).eq(5).html('<span class="label label-default">' + data.nama_khd + '</span>');
             }
-        },
-        dom: 'Blfrtip',
-        buttons: [
-            'colvis',
-            {
-                extend: 'csv',
-                exportOptions: {
-                    columns: [0, 1, 2, 3, 4, 5, 7],
-                },
-            },
-            {
-                extend: 'excel',
-                title: 'HISTORI ABSENSI ' + gedung,
-                exportOptions: {
-                    columns: [0, 1, 2, 3, 4, 5, 7],
-                },
-            },
-            {
-                extend: 'copy',
-                title: 'HISTORI ABSENSI ' + gedung,
-                exportOptions: {
-                    columns: [0, 1, 2, 3, 4, 5, 7],
-                },
-            },
-            {
-                extend: 'pdf',
-                oriented: 'portrait',
-                pageSize: 'legal',
-                title: 'HISTORI ABSENSI ' + gedung,
-                download: 'open',
-                exportOptions: {
-                    columns: [0, 1, 2, 3, 4, 5, 7],
-                },
-                customize: function (doc) {
-                    doc.content[1].table.widths = Array(doc.content[1].table.body[0].length + 1).join('*').split('');
-                    doc.styles.tableBodyEven.alignment = 'center';
-                    doc.styles.tableBodyOdd.alignment = 'center';
-                },
-            },
-            {
-                extend: 'print',
-                oriented: 'portrait',
-                pageSize: 'A4',
-                title: 'HISTORI ABSENSI ' + gedung,
-                exportOptions: {
-                    columns: [0, 1, 2, 3, 4, 5, 7],
-                },
-            },
-        ],
-        initComplete: function () {
-            var $buttons = $('.dt-buttons').hide();
-            $('#exportLink').on('change', function () {
-                var btnClass = $(this).find(":selected")[0].id
-                    ? '.buttons-' + $(this).find(":selected")[0].id
-                    : null;
-                if (btnClass) $buttons.find(btnClass).click();
-            })
         },
         rowId: function (a) {
             return a;

@@ -174,8 +174,9 @@
 </section>
 
 <?php else : ?>
-
-<div class="col-md-12">
+<section class="content">
+    <div class="row">
+    <div class="col-md-12">
     <div class="box box-widget widget-user">
         <div class="widget-user-header bg-white-active">
         <center>
@@ -184,11 +185,44 @@
             
             
         </div>        
-        <div class="box-footer">
+        <div class="box-header">
             <p style="text-align: center;">
-                <span style="font-family: georgia, palatino; font-size: 15pt;">Selamat datang di  Sistem Absensi Karyawan.</span>
+                <span style="font-family: georgia, palatino; font-size: 15pt;">History Absensi Karyawan</span>
             </p>
         </div>
+        <div class="pull-right" style="margin-right: 10px;">
+        <?php echo anchor(site_url('scan'), ' <i class="fa fa-plus"></i> &nbsp;&nbsp; Absen Manual', ' class="btn btn-info btn-lg btn-create-data btn3d" hidden="true"'); ?>
+        </div>
+        <div class="pull-center" style="margin-left: 10px;">
+        <a href="<?php echo base_url('scan')?>" class="btn btn-lg btn-primary"><i class="fa fa-camera"></i> &nbsp;&nbsp; SCAN</a>
+        </div>
+        <div class = "box-body">
+            <table id="presensi" class="table table-bordered table-hover display" style="width:100%;">
+                <thead>
+                    <tr>
+                        <th class="all">No</th>
+                        <th class="all">Tanggal</th>
+                        <th class="desktop">Jam Masuk</th>
+                        <th class="desktop">Jam Keluar</th>
+                        <th class="desktop">Kehadiran</th>
+                        <th class="desktop">Keterangan</th>
+                        <th class="desktop">status </th>
+                        <th class="desktop">Action</th>
+                    </tr>
+                </thead>
+                <tbody>
+                </tbody>
+            </table>
+        </div>    
     </div>
 </div>
+    </div>
+</section>
 <?php endif; ?>
+<script type="text/javascript">
+    let base_url = '<?= base_url() ?>';
+    let id_karyawan = '<?= $karyawan ?>';
+    let gedung = 'GRAHA AASI';
+    console.log(id_karyawan);
+</script>
+<script src="<?php echo base_url() ?>assets/app/datatables/presensi3.js" charset="utf-8"></script>

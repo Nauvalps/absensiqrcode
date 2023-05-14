@@ -59,16 +59,6 @@
             <!--        <li><a href="<?php echo base_url('jabatan') ?>"><i class="fa fa-briefcase"></i> <span>DATA JABATAN</span></a></li>                    -->
             <!--    </ul>-->
             <!--</li>-->
-            <li>
-                <a href="<?php echo base_url('scan') ?>">
-                    <i class="fa fa-camera"></i> <span>SCAN</span>
-                </a>
-            </li>
-            <li>
-                <a href="<?php echo base_url('presensi') ?>">
-                    <i class="fa fa-paperclip"></i> <span>HISTORI ABSENSI</span>
-                </a>
-            </li>
         </ul>
         <?php endif; ?>
     </section>

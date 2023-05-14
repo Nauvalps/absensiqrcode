@@ -46,6 +46,15 @@ class Presensi_model extends CI_Model
         return $this->datatables->generate();
     }
 
+    function get_history_presensi_by_id_karyawan($id_karyawan) 
+    {
+        $this->datatables->select('a.id_absen, b.id_karyawan,b.nama_karyawan,a.tgl,a.jam_msk,a.jam_klr,c.id_khd,c.nama_khd,a.ket,d.nama_status,d.id_status')
+            ->from('presensi as a,karyawan as b,kehadiran as c,stts as d')
+            ->where('c.id_khd=a.id_khd')
+            ->where('d.id_status=a.id_status')
+            ->where('b.id_karyawan', $id_karyawan);
+        return $this->datatables->generate();
+    }
     // get data by id
     function get_by_id($id)
     {

@@ -78,6 +78,18 @@ class Karyawan_model extends CI_Model
             return false;
         }
     }
+
+    function get_by_email_karyawan($emailKaryawan) {
+        $query_str =
+            $this->db->where('is_active', 1)
+            ->where('email', $emailKaryawan)
+            ->get($this->table);
+        if ($query_str->num_rows() > 0) {
+            return $query_str->row();
+        } else {
+            return false;
+        }
+    }
     // insert data
     function insert($data)
     {
