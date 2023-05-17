@@ -7,6 +7,8 @@
 <link rel="stylesheet" href="<?php echo base_url() ?>assets/plugins/morris/morris.css">
 <link rel="stylesheet" href="<?php echo base_url() ?>assets/plugins/fapicker/dist/css/fontawesome-iconpicker.min.css">
 <link rel="stylesheet" href="<?php echo base_url() ?>assets/plugins/fontawesome/css/all.css">
+<link rel="stylesheet" href="<?php echo base_url() ?>assets/plugins/sweetalert/sweetalert.css">
+<link rel="stylesheet" href="<?php echo base_url() ?>assets/plugins/sweetalert/sweetalert2.min.css">
 <link rel="stylesheet" href="<?php echo base_url() ?>assets/dist/css.css">
 <link rel="icon" href="<?php echo base_url(); ?>assets/images/18.png" type="image/gif">
 <link rel="stylesheet" href="<?php echo base_url() ?>assets/app/css/print.css">

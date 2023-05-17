@@ -12,7 +12,11 @@ class Kehadiran_model extends CI_Model
 
     function get_all()
     {
+        $this->db->where_not_in('id_khd', 1);
+        $this->db->where_not_in('id_khd', 4);
+        $this->db->where_not_in('id_khd', 7);
         return $this->db->get($this->table)->result();
     }
+
 }
 ?>

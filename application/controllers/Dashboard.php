@@ -103,4 +103,40 @@ class Dashboard extends CI_Controller
 			$this->agent = 'desktop';
 		}
 	}
+
+	function absen_manual()
+	{
+		$config['upload_path'] = './uploads/file_keterangan';
+		$config['allowed_types'] = 'jpg|png|jpeg|pdf|heic';
+		$config['max_size'] = '4096';  //4MB max
+		$config['max_width'] = '4480'; // pixel
+		$config['max_height'] = '4480'; // pixel
+		if (!empty($_FILES['image']['name'])) {
+			$config['file_name'] = $_FILES['image']['name'];
+		}
+		$this->upload->initialize($config);
+		$dateTime = new DateTime();
+		$dateTime->setTime(0, 0);
+		$hours = $dateTime->format('H:i:s');
+		$data = array(
+			'tgl' => $this->input->post('tgl_absen',true),
+			'id_khd' => $this->input->post('kehadiran',true),
+			'ket' => $this->input->post('keterangan',true),
+			'id_karyawan' => $this->input->post('id_karyawan',true),
+			'jam_msk' => $hours,
+			'jam_klr' => $hours,
+			'id_status' => 3
+		);
+		$flagUploadImage = 1;
+		if (!empty($config['file_name'])) {
+			if ($this->upload->do_upload('image')) {
+				$flagUploadImage = $this->upload->data();
+			}		
+		} else {
+			$flagUploadImage = null;
+		}
+		$data['file_keterangan'] = $flagUploadImage;
+		$this->presensi->insert($data);
+		echo json_encode($data);
+	}
 }

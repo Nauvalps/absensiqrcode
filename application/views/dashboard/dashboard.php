@@ -219,7 +219,6 @@
 								<th class="desktop">Kehadiran</th>
 								<th class="desktop">Keterangan</th>
 								<th class="desktop">status </th>
-								<th class="desktop">Action</th>
 							</tr>
 						</thead>
 						<tbody>
@@ -234,15 +233,15 @@
                                 <h4 class="modal-title">Form absen manual</h4>
                             </div>
                             <div class="modal-body">
-                                <form>
+                                <form id="formAbsenManual" enctype="multipart/form-data">
                                     <div class="form-group">
                                         <label for="tanggal">Tanggal</label>
-                                        <input type="date" class="form-control" id="tgl_absen_manual" placeholder="Enter date">
+                                        <input type="date" class="form-control" id="tgl_absen" name="tgl_absen" placeholder="Enter date">
                                     </div>
                                     <div class="form-group">
                                         <label for="kehadiran">Kehadiran</label>
                                         <select name="kehadiran" id="kehadiran" class="form-control">
-                                            <option value="-- Pilih --" selected="selected">-- Pilih --</option>
+                                            <option value="" selected="selected">-- Pilih --</option>
                                             <?php
                                                 foreach ($kehadiran as $key) { ?>
                                                     <option value="<?= $key->id_khd?>"><?= $key->nama_khd?></option>
@@ -257,13 +256,13 @@
                                     </div>
                                     <div class="form-group" id="upload_file">
                                         <label for="file">Upload file</label>
-                                        <input type="file" class="form-control" id="file">
+                                        <input type="file" class="form-control" id="file" name="file">
                                     </div>
                                 </form>
                             </div>
                             <div class="modal-footer">
                                 <button type="button" class="btn btn-default pull-left" data-dismiss="modal">Close</button>
-                                <button type="button" class="btn btn-primary">Save changes</button>
+                                <button type="submit" class="btn btn-primary" id="btnSave">Save changes</button>
                             </div>
                         </div>
                     </div>
@@ -274,19 +273,100 @@
 </section>
 <?php endif; ?>
 <script type="text/javascript"> 
-    $('#upload_file').css('visibility', 'hidden');                                              
-	let base_url = '<?= base_url() ?>';
-	let id_karyawan = '<?= $karyawan ?>';
-	let gedung = 'GRAHA AASI';
-	console.log(id_karyawan);
-    $('#kehadiran').change(function() {
-        let id = $(this).val();
-        if (id == 2 || id == 3 || id == 6) {
-            $('#upload_file').css('visibility', 'visible');
-        }  else {
-            $('#upload_file').css('visibility', 'hidden');    
-        }
-        console.log(id);
-    })
+    let base_url = '<?= base_url() ?>';
+    let id_karyawan = '<?= $karyawan ?>';
+    console.log(id_karyawan);
+    let gedung = 'GRAHA AASI';                                            
+    $(document).ready(function() {
+        $('#upload_file').css('visibility', 'hidden');
+        let id;
+        var isUploadFile = false;
+        $('#kehadiran').change(function() {
+            id = $(this).val();
+            if (id == 2 || id == 3 || id == 6) {
+                $('#upload_file').css('visibility', 'visible');
+                $('#file').on('change', function() {
+                    let allowFile = ['jpg', 'jpeg','png','pdf']
+                    let extension = this.files[0].type.split('/')[1]
+                    if (allowFile.indexOf(extension) == -1 || this.files[0].size >= 4000000 )  {
+                        Swal.fire({
+                            type: 'info',
+                            title: 'Oops...',
+                            text: 'Format file tidak sesuai atau file terlalu besar!',
+                            footer: '<a href="<?php echo base_url('dashboard') ?>">Why do I have this issue?</a>'
+                        })
+                        $('#btnSave').prop('disabled', true)
+                    }
+                })
+            }  else {
+                $('#upload_file').css('visibility', 'hidden');    
+            }
+        });
+        $('#btnSave').on('click', function(e) {
+            e.preventDefault();
+            if (!$('#tgl_absen').val() && !$('#kehadiran').val()) {
+                Swal.fire({
+                    type: 'info',
+                    title: 'Oops...',
+                    text: 'Tanggal dan kehadiaran tidak boleh kosong',
+                    footer: '<a href="<?php echo base_url('dashboard') ?>">Why do I have this issue?</a>'
+                })
+                $('#btnSave').prop('disabled', true)
+            } else if (!$('#tgl_absen').val()) {
+                Swal.fire({
+                    type: 'info',
+                    title: 'Oops...',
+                    text: 'Tanggal tidak boleh kosong',
+                    footer: '<a href="<?php echo base_url('dashboard') ?>">Why do I have this issue?</a>'
+                })
+                $('#btnSave').prop('disabled', true)
+            } else if (!$('#kehadiran').val()) {
+                Swal.fire({
+                    type: 'info',
+                    title: 'Oops...',
+                    text: 'Kehadiran tidak boleh kosong',
+                    footer: '<a href="<?php echo base_url('dashboard') ?>">Why do I have this issue?</a>'
+                })
+                $('#btnSave').prop('disabled', true)
+            } else {
+                var formData = new FormData();
+                let test = $('#file')[0].files[0];
+                let tglAbsen = $('#tgl_absen').val();
+                let kehadiran = $('#kehadiran option:selected').val();
+                let keterangan = $('textarea#keterangan').val();
+
+                formData.append('image', test); 
+                formData.append('tgl_absen', tglAbsen)
+                formData.append('kehadiran', kehadiran)
+                formData.append('keterangan', keterangan)
+                formData.append('id_karyawan', id_karyawan)
+                // Display the key/value pairs
+                for (var pair of formData.entries()) {
+                    console.log(pair[0]+ ', ' + pair[1]); 
+                }
+                $.ajax({
+                    type: "POST",
+                    url: base_url + "dashboard/absen_manual",
+                    contentType: false,
+                    async: true,
+                    data: formData,
+                    dataType: 'JSON',
+                    processData: false,
+                    success: function (data) {
+                        Swal.fire({
+                            'title': "Berhasil absen manual",
+                            'type': "success",
+                            confirmButtonText: 'OK'
+                        }).then((result) => {
+                            if (result.value) {
+                               location.reload(); 
+                            }
+                        })
+                        // console.log(data)
+                    }
+                })
+            }
+        })
+    });                                            
 </script>
 <script src="<?php echo base_url() ?>assets/app/datatables/presensi3.js" charset="utf-8"></script>
