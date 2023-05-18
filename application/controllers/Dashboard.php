@@ -135,8 +135,8 @@ class Dashboard extends CI_Controller
 		} else {
 			$flagUploadImage = null;
 		}
-		$data['file_keterangan'] = $flagUploadImage;
+		$data['file_keterangan'] = $flagUploadImage['file_name'];
 		$this->presensi->insert($data);
-		echo json_encode($data);
+		echo json_encode($data['file_keterangan']);
 	}
 }

@@ -341,9 +341,9 @@
                 formData.append('keterangan', keterangan)
                 formData.append('id_karyawan', id_karyawan)
                 // Display the key/value pairs
-                for (var pair of formData.entries()) {
-                    console.log(pair[0]+ ', ' + pair[1]); 
-                }
+                // for (var pair of formData.entries()) {
+                //     console.log(pair[0]+ ', ' + pair[1]); 
+                // }
                 $.ajax({
                     type: "POST",
                     url: base_url + "dashboard/absen_manual",
@@ -353,6 +353,7 @@
                     dataType: 'JSON',
                     processData: false,
                     success: function (data) {
+                        console.log(data);
                         Swal.fire({
                             'title': "Berhasil absen manual",
                             'type': "success",
