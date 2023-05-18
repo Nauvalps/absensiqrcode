@@ -125,14 +125,10 @@
 					resize: true,
 
 					colors: color_array1,
-					data: [ <
-						? php foreach($get_plot as $row) :
-						?
-						> {
+					data: [ <?php foreach($get_plot as $row) :?> {
 							label: '<?php echo $row->nama_gedung ?>',
-							value: < ? php echo $row - > total_karyawan; ? > ,
-						}, <
-						? php endforeach; ? >
+							value: <?php echo $row -> total_karyawan; ?> ,
+						}, <?php endforeach; ?>
 					],
 					hideHover: 'auto'
 				});
@@ -156,14 +152,10 @@
 					element: 'donut-chart2',
 					resize: true,
 					colors: color_array2,
-					data: [ <
-						? php foreach($get_plot2 as $row) :
-						?
-						> {
+					data: [ <?php foreach($get_plot2 as $row) :?> {
 							label: '<?php echo $row->nama_jabatan ?>',
-							value: < ? php echo $row - > total_karyawan; ? > ,
-						}, <
-						? php endforeach; ? >
+							value: <?php echo $row-> total_karyawan; ?> ,
+						}, <?php endforeach; ?>
 					],
 					hideHover: 'auto'
 				});
@@ -271,8 +263,7 @@
 		</div>
 	</div>
 </section>
-<?php endif; ?>
-<script type="text/javascript"> 
+<script type="text/javascript">
     let base_url = '<?= base_url() ?>';
     let id_karyawan = '<?= $karyawan ?>';
     console.log(id_karyawan);
@@ -340,10 +331,6 @@
                 formData.append('kehadiran', kehadiran)
                 formData.append('keterangan', keterangan)
                 formData.append('id_karyawan', id_karyawan)
-                // Display the key/value pairs
-                // for (var pair of formData.entries()) {
-                //     console.log(pair[0]+ ', ' + pair[1]); 
-                // }
                 $.ajax({
                     type: "POST",
                     url: base_url + "dashboard/absen_manual",
@@ -371,3 +358,4 @@
     });                                            
 </script>
 <script src="<?php echo base_url() ?>assets/app/datatables/presensi3.js" charset="utf-8"></script>
+<?php endif; ?>

@@ -9,6 +9,8 @@
 <script src="<?php echo base_url() ?>assets/plugins/fastclick/fastclick.min.js"></script>
 <!-- AdminLTE App -->
 <script src="<?php echo base_url() ?>assets/dist/js/app.min.js"></script>
+<!-- AdminLTE App -->
+<!-- <script src="<?php echo base_url() ?>assets/dist/js/app.js"></script> -->
 <!-- AdminLTE for demo purposes -->
 <script src="<?php echo base_url() ?>assets/dist/js/demo.js"></script>
 <!-- page script -->

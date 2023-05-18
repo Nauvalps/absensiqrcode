@@ -3,11 +3,12 @@
 <link rel="stylesheet" href="<?php echo base_url() ?>assets/plugins/font-awesome-4.4.0/css/font-awesome.min.css">
 <link rel="stylesheet" href="<?php echo base_url() ?>assets/plugins/ionicons-2.0.1/css/ionicons.min.css">
 <link rel="stylesheet" href="<?php echo base_url() ?>assets/dist/css/AdminLTE.min.css">
+<!-- <link rel="stylesheet" href="<?php echo base_url() ?>assets/dist/css/AdminLTE.css"> -->
 <link rel="stylesheet" href="<?php echo base_url() ?>assets/dist/css/skins/_all-skins.min.css">
 <link rel="stylesheet" href="<?php echo base_url() ?>assets/plugins/morris/morris.css">
 <link rel="stylesheet" href="<?php echo base_url() ?>assets/plugins/fapicker/dist/css/fontawesome-iconpicker.min.css">
 <link rel="stylesheet" href="<?php echo base_url() ?>assets/plugins/fontawesome/css/all.css">
-<link rel="stylesheet" href="<?php echo base_url() ?>assets/plugins/sweetalert/sweetalert.css">
+<!-- <link rel="stylesheet" href="<?php echo base_url() ?>assets/plugins/sweetalert/sweetalert.css"> -->
 <link rel="stylesheet" href="<?php echo base_url() ?>assets/plugins/sweetalert/sweetalert2.min.css">
 <link rel="stylesheet" href="<?php echo base_url() ?>assets/dist/css.css">
 <link rel="icon" href="<?php echo base_url(); ?>assets/images/18.png" type="image/gif">
