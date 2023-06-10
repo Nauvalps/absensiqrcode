@@ -51,7 +51,6 @@ class Scan extends Ci_Controller
 	{
 		$user = $this->user;
 		$data = array('user' => $user, 'users' => $this->ion_auth->user()->row());
-		print_r($data);
 		$getNameKaryawan = $user->first_name." ".$user->last_name;
 		print_r($getNameKaryawan);
 		$result_code = $this->input->post('id_karyawan');
@@ -83,6 +82,7 @@ class Scan extends Ci_Controller
 				'id_karyawan' => $karyawan->id_karyawan,
 				'tgl' => $tgl,
 				'jam_msk' => $jam_msk,
+				'latitude_longitude' => $this->input->post('latitudeAndLongitude'),
 				'id_khd' => 1,
 				'id_status' => 1,
 			);
