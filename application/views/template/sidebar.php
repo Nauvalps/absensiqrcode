@@ -52,13 +52,6 @@
                     <i class="fa fa-laptop"></i> <span>DASHBOARD</span>                    
                 </a>
             </li>
-            <!--<li class="treeview active">-->
-            <!--    <a href="#"><i class="fa fa-folder"></i> <span>MASTER DATA </span><i class="fa fa-angle-left pull-right"></i></a>-->
-            <!--    <ul class="treeview-menu menu-open" style="display: block;">-->
-            <!--        <li><a href="<?php echo base_url('karyawan') ?>"><i class="fa fa-user"></i> <span>DATA KARYAWAN</span></a></li>-->
-            <!--        <li><a href="<?php echo base_url('jabatan') ?>"><i class="fa fa-briefcase"></i> <span>DATA JABATAN</span></a></li>                    -->
-            <!--    </ul>-->
-            <!--</li>-->
         </ul>
         <?php endif; ?>
     </section>

@@ -27,7 +27,6 @@ $(document).ready(function () {
                 { "data": "nama_khd" },
                 { "data": "ket" },
                 { "data": "nama_status" },
-                { "data": null },
             ],
         "columnDefs": [
             {
@@ -42,37 +41,37 @@ $(document).ready(function () {
         "createdRow": function (row, data, index) {
             console.log(data);
             if (data.id_status == 1) {
-                $('td', row).eq(7).html('<span class="label label-success">' + data.nama_status + '</span>');
+                $('td', row).eq(6).html('<span class="label label-success">' + data.nama_status + '</span>');
             }
             else if (data.id_status == 2) {
-                $('td', row).eq(7).html('<span class="label label-danger">' + data.nama_status + '</span>');
+                $('td', row).eq(6).html('<span class="label label-danger">' + data.nama_status + '</span>');
             }
             else {
-                $('td', row).eq(7).html('<span class="label label-default">' + data.nama_status + '</span>');
+                $('td', row).eq(6).html('<span class="label label-default">' + data.nama_status + '</span>');
             }
             if (data.id_khd == 1) {
-                $('td', row).eq(5).html('<span class="label label-success">' + data.nama_khd + '</span>');
+                $('td', row).eq(4).html('<span class="label label-success">' + data.nama_khd + '</span>');
             }
             else if (data.id_khd == 2) {
-                $('td', row).eq(5).html('<span class="label label-info">' + data.nama_khd + '</span>');
+                $('td', row).eq(4).html('<span class="label label-info">' + data.nama_khd + '</span>');
             }
             else if (data.id_khd == 3) {
-                $('td', row).eq(5).html('<span class="label label-warning">' + data.nama_khd + '</span>');
+                $('td', row).eq(4).html('<span class="label label-warning">' + data.nama_khd + '</span>');
             }
             else if (data.id_khd == 4) {
-                $('td', row).eq(5).html('<span class="label label-danger">' + data.nama_khd + '</span>');
+                $('td', row).eq(4).html('<span class="label label-danger">' + data.nama_khd + '</span>');
             }
             else if (data.id_khd == 5) {
-                $('td', row).eq(5).html('<span class="label label-danger">' + data.nama_khd + '</span>');
+                $('td', row).eq(4).html('<span class="label label-danger">' + data.nama_khd + '</span>');
             }
             else if (data.id_khd == 6) {
-                $('td', row).eq(5).html('<span class="label label-danger">' + data.nama_khd + '</span>');
+                $('td', row).eq(4).html('<span class="label label-danger">' + data.nama_khd + '</span>');
             }
             else if (data.id_khd == 7) {
-                $('td', row).eq(5).html('<span class="label label-danger">' + data.nama_khd + '</span>');
+                $('td', row).eq(4).html('<span class="label label-danger">' + data.nama_khd + '</span>');
             }
             else {
-                $('td', row).eq(5).html('<span class="label label-default">' + data.nama_khd + '</span>');
+                $('td', row).eq(4).html('<span class="label label-default">' + data.nama_khd + '</span>');
             }
         },
         rowId: function (a) {
