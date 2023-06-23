@@ -267,10 +267,10 @@
     let base_url = '<?= base_url() ?>';
     let id_karyawan = '<?= $karyawan ?>';
     console.log(id_karyawan);
+	var id;
     let gedung = 'GRAHA AASI';                                            
     $(document).ready(function() {
         $('#upload_file').css('visibility', 'hidden');
-        let id;
         var isUploadFile = false;
         $('#kehadiran').change(function() {
             id = $(this).val();
@@ -295,6 +295,18 @@
         });
         $('#btnSave').on('click', function(e) {
             e.preventDefault();
+			console.log("id berapa " + id);
+			if (id == 2 || id == 3 || id == 6) {
+				if ($('#file')[0].files.length === 0) {
+					Swal.fire({
+						type: 'info',
+						title: 'Oops...',
+						text: 'File wajib diisi!',
+						footer: '<a href="<?php echo base_url('dashboard') ?>">Why do I have this issue?</a>'
+               		})
+                	$('#btnSave').prop('disabled', true)	
+				}
+			}
             if (!$('#tgl_absen').val() && !$('#kehadiran').val()) {
                 Swal.fire({
                     type: 'info',
