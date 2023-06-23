@@ -306,8 +306,7 @@
                		})
                 	$('#btnSave').prop('disabled', true)	
 				}
-			}
-            if (!$('#tgl_absen').val() && !$('#kehadiran').val()) {
+			} else if (!$('#tgl_absen').val() && !$('#kehadiran').val()) {
                 Swal.fire({
                     type: 'info',
                     title: 'Oops...',
