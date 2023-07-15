@@ -38,7 +38,8 @@ class Dashboard extends CI_Controller
 				$kehadiran = $this->kehadiran->get_all();
 				$result = [
 					'karyawan' => $cekKaryawan->id_karyawan,
-					'kehadiran' => $kehadiran
+					'kehadiran' => $kehadiran,
+					'slot_cuti' => $cekKaryawan->slot_cuti - $cekKaryawan->ambil_cuti
 				];
 				$data += $result;
 			}	
@@ -137,6 +138,14 @@ class Dashboard extends CI_Controller
 		}
 		$data['file_keterangan'] = $flagUploadImage['file_name'];
 		$this->presensi->insert($data);
+		if($this->input->post('ambil_cuti') != null) {
+			$dataCuti = array(
+				'ambil_cuti' => $this->input->post('ambil_cuti'),
+				'created_tm_cuti' => date('YYYY-MM-DD HH:mm:ss'),
+				'id_karyawan' => $this->input->post('id_karyawan',true)
+			);
+			$this->karyawan->update($dataCuti);
+		}
 		echo json_encode($data['file_keterangan']);
 	}
 }

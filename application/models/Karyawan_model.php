@@ -7,7 +7,7 @@ class Karyawan_model extends CI_Model
 {
 
     public $table = 'karyawan';
-    public $id = 'id';
+    public $id = 'id_karyawan';
     public $namaKaryawan = 'nama_karyawan';
     public $order = 'DESC';
 

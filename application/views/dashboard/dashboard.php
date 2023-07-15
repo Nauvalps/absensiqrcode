@@ -242,6 +242,7 @@
                                             ?>
                                         </select>
                                     </div>
+									<p id="slot_cuti">Sisa slot cuti anda : <?php echo $slot_cuti?></p>
                                     <div class="form-group">
                                         <label for="keterangan">Keterangan</label>         
                                         <textarea class="form-control" name="keterangan" id="keterangan" rows="2"></textarea>
@@ -271,11 +272,17 @@
     let gedung = 'GRAHA AASI';                                            
     $(document).ready(function() {
         $('#upload_file').css('visibility', 'hidden');
+		$('#slot_cuti').css('visibility', 'hidden');
         var isUploadFile = false;
         $('#kehadiran').change(function() {
             id = $(this).val();
-            if (id == 2 || id == 3 || id == 6) {
-                $('#upload_file').css('visibility', 'visible');
+			console.log(id);
+            if (id == 5) {
+                $('#upload_file').css('visibility', 'hidden');
+				$('#slot_cuti').css('visibility', 'hidden');
+            }  else {
+				$('#upload_file').css('visibility', 'visible');
+				$('#slot_cuti').css('visibility', 'visible');
                 $('#file').on('change', function() {
                     let allowFile = ['jpg', 'jpeg','png','pdf']
                     let extension = this.files[0].type.split('/')[1]
@@ -289,8 +296,6 @@
                         $('#btnSave').prop('disabled', true)
                     }
                 })
-            }  else {
-                $('#upload_file').css('visibility', 'hidden');    
             }
         });
         $('#btnSave').on('click', function(e) {
@@ -336,7 +341,9 @@
                 let tglAbsen = $('#tgl_absen').val();
                 let kehadiran = $('#kehadiran option:selected').val();
                 let keterangan = $('textarea#keterangan').val();
-
+				if (kehadiaran == 6) {
+					formData.append('ambil_cuti', 1)
+				}
                 formData.append('image', test); 
                 formData.append('tgl_absen', tglAbsen)
                 formData.append('kehadiran', kehadiran)
