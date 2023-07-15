@@ -31,6 +31,16 @@
                             <?php echo form_error('nik') ?>
                         </div>
                         <div class="form-group">
+                            <label for="cuti" class="control-label">Cuti</label>
+                            <div class="input-group">
+                                <input type="text" class="form-control" name="cuti" id="cuti" placeholder="Jatah cuti" value="<?php echo $cuti; ?>"/>
+                                <span class="input-group-addon">
+                                    <span class="glyphicon glyphicon-user"></span>
+                                </span>
+                            </div>
+                            <div class="help-block with-errors"></div>
+                        </div>
+                        <div class="form-group">
                             <label for="nama_karyawan" class="control-label">Nama Karyawan</label>
                             <div class="input-group">
                                 <input type="text" class="form-control" name="nama_karyawan" id="nama_karyawan" data-error="Nama Anggota harus diisi" placeholder="Nama Karyawan" value="<?php echo $nama_karyawan; ?>" required />
@@ -195,7 +205,7 @@
                             </div>
                             <div class="help-block with-errors"></div>
                         </div>
-                        <!-- <input type="hidden" name="old_image" id="old_image" value="<?php echo $user_pict; ?>"/>                         -->
+                        <input type="hidden" name="old_image" id="old_image" value="<?php echo $user_pict; ?>"/>
                         <div class="form-group">
                             <input type="hidden" name="id" value="<?php echo $id; ?>" />
                         </div>
@@ -204,7 +214,8 @@
                             <a href="<?php echo site_url('karyawan') ?>" class="btn btn-default btn-lg btn3d">Cancel</a>
                         </div>
                     </form>
-                </div><!-- /.box-body -->
+                </div>
+                <!-- /.box-body -->
             </div><!-- /.box -->
         </div><!-- /.col -->
     </div><!-- /.row -->

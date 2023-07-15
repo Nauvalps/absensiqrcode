@@ -7,7 +7,7 @@ class Karyawan_model extends CI_Model
 {
 
     public $table = 'karyawan';
-    public $id = 'id';
+    public $id = 'id_karyawan';
     public $namaKaryawan = 'nama_karyawan';
     public $order = 'DESC';
 
@@ -32,7 +32,7 @@ class Karyawan_model extends CI_Model
 
     function get_all_query()
     {
-        $sql = "SELECT a.id_karyawan,a.no_ktp,a.nik,a.nama_karyawan,a.tmp_lahir,a.tgl_lahir,a.jenis_kelamin,a.goldar,a.agama,a.alamat_ktp,a.domisili,a.no_telp,a.telp_kantor,a.telp_kerabat,a.hub_kerabat,a.is_active,a.user_pict,b.nama_jabatan,a.gedung_id
+        $sql = "SELECT a.id_karyawan,a.no_ktp,a.nik, a.nama_karyawan, a.slot_cuti, a.tmp_lahir,a.tgl_lahir,a.jenis_kelamin,a.goldar,a.agama,a.alamat_ktp,a.domisili,a.no_telp,a.telp_kantor,a.telp_kerabat,a.hub_kerabat,a.is_active,a.user_pict,b.nama_jabatan,a.gedung_id
                 from karyawan as a,jabatan as b
                 where b.id_jabatan=a.jabatan";
         return $this->db->query($sql)->result();
@@ -41,7 +41,7 @@ class Karyawan_model extends CI_Model
 
     function get_by_id_query($id)
     {
-        $sql = "SELECT a.id_karyawan,a.no_ktp,a.nik,a.nama_karyawan,a.tmp_lahir,a.tgl_lahir,a.jenis_kelamin,a.goldar,a.agama,a.alamat_ktp,a.domisili,a.no_telp,a.telp_kantor,a.telp_kerabat,a.hub_kerabat,a.is_active,a.user_pict,b.nama_jabatan,c.nama_gedung
+        $sql = "SELECT a.id_karyawan,a.no_ktp,a.nik,a.nama_karyawan, a.slot_cuti, a.tmp_lahir,a.tgl_lahir,a.jenis_kelamin,a.goldar,a.agama,a.alamat_ktp,a.domisili,a.no_telp,a.telp_kantor,a.telp_kerabat,a.hub_kerabat,a.is_active,a.user_pict,b.nama_jabatan,c.nama_gedung
         from karyawan as a,jabatan as b,gedung as c
         where b.id_jabatan=a.jabatan
         and a.gedung_id=c.gedung_id        
@@ -53,7 +53,7 @@ class Karyawan_model extends CI_Model
 
     function getData()
     {
-        $this->datatables->select('a.id,a.id_karyawan,a.nama_karyawan,a.no_ktp,a.nik,a.tmp_lahir,a.tgl_lahir,a.jenis_kelamin,a.goldar,a.agama,a.alamat_ktp,a.domisili,a.no_telp,a.telp_kantor,a.telp_kerabat,a.hub_kerabat,a.is_active,a.user_pict,b.nama_jabatan,c.nama_gedung')
+        $this->datatables->select('a.id,a.id_karyawan,a.nama_karyawan, a.slot_cuti, ,a.no_ktp,a.nik,a.tmp_lahir,a.tgl_lahir,a.jenis_kelamin,a.goldar,a.agama,a.alamat_ktp,a.domisili,a.no_telp,a.telp_kantor,a.telp_kerabat,a.hub_kerabat,a.is_active,a.user_pict,b.nama_jabatan,c.nama_gedung')
             ->from('karyawan as a,jabatan as b,gedung as c')
             ->where('b.id_jabatan=a.jabatan')
             ->where('a.gedung_id=c.gedung_id');
