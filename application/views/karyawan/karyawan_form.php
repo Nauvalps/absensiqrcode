@@ -31,6 +31,17 @@
                             <?php echo form_error('nik') ?>
                         </div>
                         <div class="form-group">
+                            <label for="cuti" class="control-label">Slot Cuti</label>
+                            <div class="input-group">
+                                <input type="text" class="form-control" name="cuti" id="cuti"  placeholder="Slot cuti karyawan"/>
+                                <span class="input-group-addon">
+                                    <span class="glyphicon glyphicon-user"></span>
+                                </span>
+                            </div>
+                            <!-- <div class="help-block with-errors"></div>
+                            <?php echo form_error('cuti') ?> -->
+                        </div>
+                        <div class="form-group">
                             <label for="nama_karyawan" class="control-label">Nama Karyawan</label>
                             <div class="input-group">
                                 <input type="text" class="form-control" name="nama_karyawan" id="nama_karyawan" data-error="Nama Anggota harus diisi" placeholder="Nama Karyawan" value="<?php echo $nama_karyawan; ?>" required />

@@ -122,6 +122,7 @@ class Karyawan extends CI_Controller
             'id_karyawan' => set_value('id_karyawan'),
             'no_ktp' => set_value('no_ktp'),
             'nik' => set_value('nik'),
+            'cuti' => set_value('cuti'),
             'nama_karyawan' => set_value('nama_karyawan'),
             'tmp_lahir' => set_value('tmp_lahir'),
             'tgl_lahir' => set_value('tgl_lahir'),
