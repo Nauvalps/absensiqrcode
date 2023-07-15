@@ -47,6 +47,7 @@ $(document).ready(function () {
                 "orderable": false,
                 "searchable": false,
                 "render": function (data, type, row, meta) {
+                    console.log(data);
                     let btn;
                     if (checkLogin == 1) {
                         return `
