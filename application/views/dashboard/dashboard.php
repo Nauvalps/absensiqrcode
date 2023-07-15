@@ -267,6 +267,7 @@
 <script type="text/javascript">
     let base_url = '<?= base_url() ?>';
     let id_karyawan = '<?= $karyawan ?>';
+	let slot_cuti = '<?= $slot_cuti ?>';
     console.log(id_karyawan);
 	var id;
     let gedung = 'GRAHA AASI';                                            
@@ -302,7 +303,15 @@
             e.preventDefault();
 			console.log("id berapa " + id);
 			if (id == 2 || id == 3 || id == 6) {
-				if ($('#file')[0].files.length === 0) {
+				if (id == 6 && slot_cuti < 0) {
+					Swal.fire({
+						type: 'info',
+						title: 'Oops...',
+						text: 'Cuti anda sudah habis!',
+						footer: '<a href="<?php echo base_url('dashboard') ?>">Why do I have this issue?</a>'
+               		})
+                	$('#btnSave').prop('disabled', true)	
+				} else if ($('#file')[0].files.length === 0) {
 					Swal.fire({
 						type: 'info',
 						title: 'Oops...',
