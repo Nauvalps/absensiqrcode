@@ -139,8 +139,9 @@ class Dashboard extends CI_Controller
 		$data['file_keterangan'] = $flagUploadImage['file_name'];
 		$this->presensi->insert($data);
 		if($this->input->post('ambil_cuti') != null) {
+			$cekCuti = $this->karyawan->get_by_id($this->input->post('id_karyawan',true));
 			$dataCuti = array(
-				'ambil_cuti' => $this->input->post('ambil_cuti'),
+				'ambil_cuti' => $this->input->post('ambil_cuti') + $cekCuti->ambil_cuti,
 				'created_tm_cuti' => date('YYYY-MM-DD HH:mm:ss'),
 				'id_karyawan' => $this->input->post('id_karyawan',true)
 			);
