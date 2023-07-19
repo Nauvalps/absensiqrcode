@@ -107,46 +107,40 @@ class Dashboard extends CI_Controller
 
 	function absen_manual()
 	{
-		$config['upload_path'] = './uploads/file_keterangan';
-		$config['allowed_types'] = 'jpg|png|jpeg|pdf|heic';
-		$config['max_size'] = '4096';  //4MB max
-		$config['max_width'] = '4480'; // pixel
-		$config['max_height'] = '4480'; // pixel
-		if (!empty($_FILES['image']['name'])) {
-			$config['file_name'] = $_FILES['image']['name'];
-		}
-		$this->upload->initialize($config);
-		$dateTime = new DateTime();
-		$dateTime->setTime(0, 0);
-		$hours = $dateTime->format('H:i:s');
 		$data = array(
 			'tgl' => $this->input->post('tgl_absen',true),
 			'id_khd' => $this->input->post('kehadiran',true),
 			'ket' => $this->input->post('keterangan',true),
 			'id_karyawan' => $this->input->post('id_karyawan',true),
-			'jam_msk' => $hours,
-			'jam_klr' => $hours,
 			'id_status' => 3
 		);
-		$flagUploadImage = 1;
-		if (!empty($config['file_name'])) {
-			if ($this->upload->do_upload('image')) {
-				$flagUploadImage = $this->upload->data();
-			}		
-		} else {
-			$flagUploadImage = null;
+		$config['upload_path'] = './uploads/file_keterangan';
+		$config['allowed_types'] = 'jpg|png|jpeg|pdf|heic';
+		$config['max_size'] = '4096';  //4MB max
+		$config['overwrite'] = true;
+		if (!empty($_FILES['file'])) {
+			$config['file_name'] = $_FILES['file']['name'];
+			$data['file_keterangan'] = $config['file_name'];
 		}
-		$data['file_keterangan'] = $flagUploadImage['file_name'];
+		$this->upload->initialize($config);
+		$dateTime = new DateTime();
+		$dateTime->setTime(0, 0);
+		$hours = $dateTime->format('H:i:s');
+		$data["jam_msk"] = $hours;
+		$data["jam_klr"] = $hours;
+		if (!empty($data['file_keterangan'])) {
+			$this->upload->do_upload('file');		
+		}
 		$this->presensi->insert($data);
-		if($this->input->post('ambil_cuti') != null) {
-			$cekCuti = $this->karyawan->get_by_id($this->input->post('id_karyawan',true));
+		if($data["id_karyawan"] != null) {
+			$cekCuti = $this->karyawan->get_by_id($data["id_karyawan"]);
 			$dataCuti = array(
 				'ambil_cuti' => $this->input->post('ambil_cuti') + $cekCuti->ambil_cuti,
-				'created_tm_cuti' => date('YYYY-MM-DD HH:mm:ss'),
-				'id_karyawan' => $this->input->post('id_karyawan',true)
+				'created_tm_cuti' => date('YYYY-MM-DD HH:mm:ss')
 			);
-			$this->karyawan->update($dataCuti);
+			$this->karyawan->update($data["id_karyawan"],$dataCuti);
 		}
-		echo json_encode($data['file_keterangan']);
+		// $this->presensi->insert($data);
+		die(json_encode($data));
 	}
 }

@@ -177,6 +177,121 @@
 </section>
 
 <?php else : ?>
+
+<script type="text/javascript">
+    let base_url = '<?= base_url() ?>';
+    let id_karyawan = '<?= $karyawan ?>';
+    console.log(id_karyawan);
+	
+	let slot_cuti = '<?= $slot_cuti ?>';
+	console.log(slot_cuti);
+    let gedung = 'GRAHA AASI';                                            
+    $(document).ready(function(e) {
+        $('#upload_file').css('visibility', 'hidden');
+		$('#slot_cuti').css('visibility', 'hidden');
+        let id;
+        var isUploadFile = false;
+        $('#kehadiran').change(function(e) {
+            id = $(this).val();
+            if (id == 2 || id == 3 || id == 6) {
+                $('#upload_file').css('visibility', 'visible');
+				$('#slot_cuti').css('visibility', 'visible');
+				if (slot_cuti < 0 && id == 6) {
+					Swal.fire({
+						type: 'info',
+						title: 'Oops...',
+						text: 'Jatah cuti anda habis!',
+						footer: '<a href="<?php echo base_url('dashboard') ?>">Why do I have this issue?</a>'
+                    })
+                    $('#btnSave').prop('disabled', true)
+				}
+                $('#file').on('change', function() {
+                    let allowFile = ['jpg', 'jpeg','png','pdf']
+                    let extension = this.files[0].type.split('/')[1]
+                    if (allowFile.indexOf(extension) == -1 || this.files[0].size >= 4000000 )  {
+                        Swal.fire({
+                            type: 'info',
+                            title: 'Oops...',
+                            text: 'Format file tidak sesuai atau file terlalu besar!',
+                            footer: '<a href="<?php echo base_url('dashboard') ?>">Why do I have this issue?</a>'
+                        })
+                        $('#btnSave').prop('disabled', true)
+                    }
+                })
+            }  else {
+                $('#upload_file').css('visibility', 'hidden');    
+            }
+        });
+		$(document).ready(function() {
+			$("#formAbsenManual").submit(function(e) {
+				e.preventDefault();
+				var formData = new FormData(this);
+				let kehadiran = $('#kehadiran option:selected').val();
+				if (kehadiran == 6) {
+					formData.append('ambil_cuti', 1)	
+				}
+				formData.append('id_karyawan', id_karyawan);
+				if (!$('#tgl_absen').val() && !$('#kehadiran').val()) {
+					Swal.fire({
+						type: 'info',
+						title: 'Oops...',
+						text: 'Tanggal dan kehadiaran tidak boleh kosong',
+						footer: '<a href="<?php echo base_url('dashboard') ?>">Why do I have this issue?</a>'
+					})
+					$('#btnSave').prop('disabled', true)
+				} else if (!$('#tgl_absen').val()) {
+					Swal.fire({
+						type: 'info',
+						title: 'Oops...',
+						text: 'Tanggal tidak boleh kosong',
+						footer: '<a href="<?php echo base_url('dashboard') ?>">Why do I have this issue?</a>'
+					})
+					$('#btnSave').prop('disabled', true)
+				} else if (!$('#kehadiran').val()) {
+					Swal.fire({
+						type: 'info',
+						title: 'Oops...',
+						text: 'Kehadiran tidak boleh kosong',
+						footer: '<a href="<?php echo base_url('dashboard') ?>">Why do I have this issue?</a>'
+					})
+					$('#btnSave').prop('disabled', true)
+				} else {
+					Swal.fire({
+						title: 'Apakah sudah benar datanya?',
+						text: "cek terlebih dahulu sebelum ditambah!",
+						icon: 'warning',
+						showCancelButton: true,
+						confirmButtonColor: '#3085d6',
+						cancelButtonColor: '#d33',
+						confirmButtonText: 'Ya, tambah data!'
+					}).then((result) => {
+						if (result.value) {
+							$.ajax({
+								url: "<?php echo base_url('dashboard/absen_manual/')?>",
+								data: formData,
+								processData: false,
+								contentType: false,
+								cache: false,
+								async:true,
+								method: "post",
+								dataType: "JSON",
+							}).done(function(res) {
+								console.log('data'+JSON.stringify(res));
+								Swal.fire({
+									title: "Tambah data berhasil !",
+									icon: "success",
+									confirmButtonText: "OK"
+								}).then(function() {
+									window.location = "<?php echo base_url('dashboard')?>";
+								})
+							})	
+						}
+					})
+				}
+			});
+        });
+    });                                            
+</script>	
 <section class="content">
 	<div class="row">
 		<div class="col-md-12">
@@ -224,8 +339,8 @@
                                 <span aria-hidden="true">&times;</span></button>
                                 <h4 class="modal-title">Form absen manual</h4>
                             </div>
+							<form id="formAbsenManual" enctype="multipart/form-data">
                             <div class="modal-body">
-                                <form id="formAbsenManual" enctype="multipart/form-data">
                                     <div class="form-group">
                                         <label for="tanggal">Tanggal</label>
                                         <input type="date" class="form-control" id="tgl_absen" name="tgl_absen" placeholder="Enter date">
@@ -251,138 +366,18 @@
                                         <label for="file">Upload file</label>
                                         <input type="file" class="form-control" id="file" name="file">
                                     </div>
-                                </form>
                             </div>
                             <div class="modal-footer">
                                 <button type="button" class="btn btn-default pull-left" data-dismiss="modal">Close</button>
-                                <button type="submit" class="btn btn-primary" id="btnSave">Save changes</button>
+                                <input type="submit" class="btn btn-primary" id="btnSave" name="add" value="Simpan">
                             </div>
                         </div>
+						</form>
                     </div>
 				</div>
 			</div>
 		</div>
 	</div>
 </section>
-<script type="text/javascript">
-    let base_url = '<?= base_url() ?>';
-    let id_karyawan = '<?= $karyawan ?>';
-	let slot_cuti = '<?= $slot_cuti ?>';
-    console.log(id_karyawan);
-	var id;
-    let gedung = 'GRAHA AASI';                                            
-    $(document).ready(function() {
-        $('#upload_file').css('visibility', 'hidden');
-		$('#slot_cuti').css('visibility', 'hidden');
-        var isUploadFile = false;
-        $('#kehadiran').change(function() {
-            id = $(this).val();
-			console.log(id);
-            if (id == 5) {
-                $('#upload_file').css('visibility', 'hidden');
-				$('#slot_cuti').css('visibility', 'hidden');
-            }  else {
-				$('#upload_file').css('visibility', 'visible');
-				$('#slot_cuti').css('visibility', 'visible');
-                $('#file').on('change', function() {
-                    let allowFile = ['jpg', 'jpeg','png','pdf']
-                    let extension = this.files[0].type.split('/')[1]
-                    if (allowFile.indexOf(extension) == -1 || this.files[0].size >= 4000000 )  {
-                        Swal.fire({
-                            type: 'info',
-                            title: 'Oops...',
-                            text: 'Format file tidak sesuai atau file terlalu besar!',
-                            footer: '<a href="<?php echo base_url('dashboard') ?>">Why do I have this issue?</a>'
-                        })
-                        $('#btnSave').prop('disabled', true)
-                    }
-                })
-            }
-        });
-        $('#btnSave').on('click', function(e) {
-            e.preventDefault();
-			console.log("id berapa " + id);
-			if (id == 2 || id == 3 || id == 6) {
-				if (id == 6 && slot_cuti < 0) {
-					Swal.fire({
-						type: 'info',
-						title: 'Oops...',
-						text: 'Cuti anda sudah habis!',
-						footer: '<a href="<?php echo base_url('dashboard') ?>">Why do I have this issue?</a>'
-               		})
-                	$('#btnSave').prop('disabled', true)	
-				} else if ($('#file')[0].files.length === 0) {
-					Swal.fire({
-						type: 'info',
-						title: 'Oops...',
-						text: 'File wajib diisi!',
-						footer: '<a href="<?php echo base_url('dashboard') ?>">Why do I have this issue?</a>'
-               		})
-                	$('#btnSave').prop('disabled', true)	
-				}
-			} else if (!$('#tgl_absen').val() && !$('#kehadiran').val()) {
-                Swal.fire({
-                    type: 'info',
-                    title: 'Oops...',
-                    text: 'Tanggal dan kehadiaran tidak boleh kosong',
-                    footer: '<a href="<?php echo base_url('dashboard') ?>">Why do I have this issue?</a>'
-                })
-                $('#btnSave').prop('disabled', true)
-            } else if (!$('#tgl_absen').val()) {
-                Swal.fire({
-                    type: 'info',
-                    title: 'Oops...',
-                    text: 'Tanggal tidak boleh kosong',
-                    footer: '<a href="<?php echo base_url('dashboard') ?>">Why do I have this issue?</a>'
-                })
-                $('#btnSave').prop('disabled', true)
-            } else if (!$('#kehadiran').val()) {
-                Swal.fire({
-                    type: 'info',
-                    title: 'Oops...',
-                    text: 'Kehadiran tidak boleh kosong',
-                    footer: '<a href="<?php echo base_url('dashboard') ?>">Why do I have this issue?</a>'
-                })
-                $('#btnSave').prop('disabled', true)
-            } else {
-                var formData = new FormData();
-                let test = $('#file')[0].files[0];
-                let tglAbsen = $('#tgl_absen').val();
-                let kehadiran = $('#kehadiran option:selected').val();
-                let keterangan = $('textarea#keterangan').val();
-				if (kehadiaran == 6) {
-					formData.append('ambil_cuti', 1)
-				}
-                formData.append('image', test); 
-                formData.append('tgl_absen', tglAbsen)
-                formData.append('kehadiran', kehadiran)
-                formData.append('keterangan', keterangan)
-                formData.append('id_karyawan', id_karyawan)
-                $.ajax({
-                    type: "POST",
-                    url: base_url + "dashboard/absen_manual",
-                    contentType: false,
-                    async: true,
-                    data: formData,
-                    dataType: 'JSON',
-                    processData: false,
-                    success: function (data) {
-                        console.log(data);
-                        Swal.fire({
-                            'title': "Berhasil absen manual",
-                            'type': "success",
-                            confirmButtonText: 'OK'
-                        }).then((result) => {
-                            if (result.value) {
-                               location.reload(); 
-                            }
-                        })
-                        // console.log(data)
-                    }
-                })
-            }
-        })
-    });                                            
-</script>
 <script src="<?php echo base_url() ?>assets/app/datatables/presensi3.js" charset="utf-8"></script>
 <?php endif; ?>
