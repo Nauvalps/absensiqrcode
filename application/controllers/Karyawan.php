@@ -191,7 +191,7 @@ class Karyawan extends CI_Controller
                         'telp_kerabat' => $this->input->post('telp_kerabat', TRUE),
                         'hub_kerabat' => $this->input->post('hub_kerabat', TRUE),
                         'is_active' => 1,
-                        'created_tm' => date('YYYY-MM-DD HH:mm:ss'),
+                        'created_tm' => date('Y-m-d H:i:s'),
                         'jabatan' => $this->input->post('jabatan', TRUE),                        
                         'gedung_id' => $this->input->post('gedung_id', TRUE),
                         'user_pict' => $user_pict['file_name'],
@@ -320,7 +320,7 @@ class Karyawan extends CI_Controller
             'hub_kerabat' => $this->input->post('hub_kerabat', TRUE),
             'jabatan' => $this->input->post('jabatan', TRUE),            
             'gedung_id' => $this->input->post('gedung_id', TRUE),
-            'modified_tm' => date('YYYY-MM-DD HH:mm:ss'),
+            'modified_tm' => date('Y-m-d H:i:s'),
             // 'is_active' => $this->input->post('is_active', TRUE),
             'user_pict' => $new_pict,
         );

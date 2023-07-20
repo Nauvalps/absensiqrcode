@@ -7,7 +7,8 @@ class Karyawan_model extends CI_Model
 {
 
     public $table = 'karyawan';
-    public $id = 'id_karyawan';
+    public $id_karyawan = 'id_karyawan';
+    public $id = 'id';
     public $namaKaryawan = 'nama_karyawan';
     public $order = 'DESC';
 
@@ -23,7 +24,6 @@ class Karyawan_model extends CI_Model
         return $this->db->get($this->table)->result();
     }
 
-
     function get_max()
     {
         return $this->db->select('max(id) as kode')
@@ -38,7 +38,6 @@ class Karyawan_model extends CI_Model
         return $this->db->query($sql)->result();
     }
 
-
     function get_by_id_query($id)
     {
         $sql = "SELECT a.id_karyawan,a.no_ktp,a.nik,a.nama_karyawan, a.slot_cuti, a.tmp_lahir,a.tgl_lahir,a.jenis_kelamin,a.goldar,a.agama,a.alamat_ktp,a.domisili,a.no_telp,a.telp_kantor,a.telp_kerabat,a.hub_kerabat,a.is_active,a.user_pict,b.nama_jabatan,c.nama_gedung
@@ -48,8 +47,6 @@ class Karyawan_model extends CI_Model
         and id=$id";
         return $this->db->query($sql)->row($id);
     }
-
-    
 
     function getData()
     {
@@ -63,6 +60,13 @@ class Karyawan_model extends CI_Model
     function get_by_id($id)
     {
         $this->db->where($this->id, $id);
+        return $this->db->get($this->table)->row();
+    }
+
+    // get data by id_karyawan
+    function get_by_id_karyawan($id)
+    {
+        $this->db->where($this->id_karyawan, $id);
         return $this->db->get($this->table)->row();
     }
     
@@ -100,6 +104,13 @@ class Karyawan_model extends CI_Model
     function update($id, $data)
     {
         $this->db->where($this->id, $id);
+        $this->db->update($this->table, $data);
+    }
+
+    // update data cuti karyawan
+    function updateSisaCuti($id, $data)
+    {
+        $this->db->where($this->id_karyawan, $id);
         $this->db->update($this->table, $data);
     }
 

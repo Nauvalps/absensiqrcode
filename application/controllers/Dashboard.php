@@ -133,12 +133,12 @@ class Dashboard extends CI_Controller
 		}
 		$this->presensi->insert($data);
 		if($data["id_karyawan"] != null) {
-			$cekCuti = $this->karyawan->get_by_id($data["id_karyawan"]);
+			$cekCuti = $this->karyawan->get_by_id_karyawan($data["id_karyawan"]);
 			$dataCuti = array(
 				'ambil_cuti' => $this->input->post('ambil_cuti') + $cekCuti->ambil_cuti,
-				'created_tm_cuti' => date('YYYY-MM-DD HH:mm:ss')
+				'created_tm_cuti' => date('Y-m-d H:i:s')
 			);
-			$this->karyawan->update($data["id_karyawan"],$dataCuti);
+			$this->karyawan->updateSisaCuti($data["id_karyawan"],$dataCuti);
 		}
 		// $this->presensi->insert($data);
 		die(json_encode($data));
